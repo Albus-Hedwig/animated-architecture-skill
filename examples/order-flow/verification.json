@@ -1,0 +1,44 @@
+{
+  "result": "passed",
+  "checked_at": "2026-10-08T03:23:44.897156+00:00",
+  "browser": "isolated Playwright Chromium",
+  "browser_version": "134.0.6998.35",
+  "phases": 6,
+  "duration_seconds": 14,
+  "geometry": {
+    "issues": [],
+    "routes": 6,
+    "frames": 280,
+    "packets": 280
+  },
+  "node_content_bounds": "all phases passed",
+  "controls": [
+    "autoplay",
+    "pause",
+    "step buttons",
+    "previous",
+    "next",
+    "keyboard",
+    "scrubber",
+    "speed",
+    "end",
+    "loop",
+    "restart",
+    "zoom",
+    "fit",
+    "fullscreen"
+  ],
+  "viewports": [
+    [
+      1400,
+      1100
+    ],
+    [
+      390,
+      844
+    ]
+  ],
+  "reduced_motion": "starts paused",
+  "page_errors": [],
+  "external_requests": []
+}

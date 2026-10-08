@@ -1,0 +1,52 @@
+# animate-architecture
+
+终端风格动态架构图的 Codex skill。用深色窗口、等宽文字、SVG 连线和沿路径移动的光点，展示系统组件之间的调用及当前操作。支持离线 HTML、播放/暂停、单步、拖动进度、倍速、缩放和全屏；GIF 为可选预览。
+
+`skills/animate-architecture/` 是完整可移植的 skill。节点、连接、状态和时间线用 JSON 配置，不绑定 Agent 或特定模型。构建使用 Python 标准库，生成的 HTML 无网络依赖。
+
+![Agent 架构预览](examples/agent-tree/preview.png)
+
+## 本地安装与调用
+
+```bash
+python3 scripts/install.py
+```
+
+默认安装到 `${CODEX_HOME:-~/.codex}/skills/animate-architecture`，已有副本先保存到 `skill-backups/`。新建 Codex 会话加载新 skill，然后输入：
+
+> 使用 $animate-architecture，把我的订单处理系统画成终端风格动态图。组件包括客户端、订单服务、支付、事件队列和仓库。演示从提交订单到支付确认、发布事件和仓库履约的过程，给我可离线播放的 HTML。
+
+已有真实架构时提供其组件、职责、调用关系与典型场景即可。skill 默认可以自动匹配相关制图任务。
+
+## 直接运行模板
+
+```bash
+python3 skills/animate-architecture/scripts/build.py skills/animate-architecture/assets/agent-tree.json --output dist/agent-tree.html
+python3 skills/animate-architecture/scripts/build.py skills/animate-architecture/assets/order-flow.json --output dist/order-flow.html
+```
+
+双击生成的 HTML。`examples/` 中也保留了两个可直接打开的成品：Agent 协作（7 节点、9 连线、12 步、31 秒）和订单处理（5 节点、6 连线、6 步、14 秒）。两者都是模拟案例，不调用真实模型、支付接口或业务服务。
+
+修改自己的 `diagram.json`，参考 [数据格式](skills/animate-architecture/references/diagram-format.md) 和 [设计规则](skills/animate-architecture/references/design-and-validation.md)。改变拓扑时重新安排框边端口与绕线路径。代码不包含自动布局或拖拽编辑器。
+
+## 验证与 GIF
+
+```bash
+python3 -m unittest discover -s tests
+python3 -m pip install playwright pillow
+python3 -m playwright install chromium
+python3 skills/animate-architecture/scripts/verify_browser.py dist/agent-tree.html --output-dir preview --gif --preview-step 8
+```
+
+播放 HTML 不需要 Playwright 或 Pillow。它们只用于维护者验证与导出：检查完整流程、节点内容边界、SVG 路径、动画位置和播放控制，输出实际浏览器截图、`verification.json` 和可选 GIF。浏览器运行过程阻断外部请求，不使用个人浏览器资料。模板变更后重新构建并核对受影响案例。
+
+## 后续迭代
+
+仓库中的 skill 是更新来源；本地安装副本是快照。修改 `skills/animate-architecture/`，更新案例及验证输出，提交到仓库，再运行安装脚本同步本地。另一台电脑可以先克隆私有仓库，再安装。
+
+```bash
+git pull --ff-only
+python3 scripts/install.py
+```
+
+skill 内容为可读 Markdown，格式适合维护在 GitHub。新增需求优先扩展 JSON 或有实证的问题规则，避免每次案例都累积固定步骤、阈值和模型名。初始风格来自用户提供的参考截图；此仓库中的渲染器与 skill 为本次实现。

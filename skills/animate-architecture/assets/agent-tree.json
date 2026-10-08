@@ -1,0 +1,867 @@
+{
+  "version": 1,
+  "title": "CODEX AGENT TREE  ·  GPT-6.1 SOL WORKS  ·  ASTRA ON CALL",
+  "subtitle": "SIMULATED EXECUTION TRACE",
+  "simulated": true,
+  "canvas": {
+    "width": 1200,
+    "height": 842
+  },
+  "legend": [
+    {
+      "label": "sol · high",
+      "color": "cyan"
+    },
+    {
+      "label": "agents · medium",
+      "color": "blue"
+    },
+    {
+      "label": "jev · forks",
+      "color": "green"
+    },
+    {
+      "label": "astra · on call",
+      "color": "purple"
+    },
+    {
+      "label": "config · split",
+      "color": "pink"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "config",
+      "title": "~/.codex/config.toml",
+      "kind": "info",
+      "color": "pink",
+      "bounds": [
+        28,
+        116,
+        350,
+        142
+      ],
+      "rows": [
+        {
+          "label": "model",
+          "value": "gpt-6.1-sol"
+        },
+        {
+          "label": "effort",
+          "value": "high"
+        },
+        {
+          "label": "approvals",
+          "value": "auto_review"
+        }
+      ],
+      "footer": "main agent configuration"
+    },
+    {
+      "id": "rules",
+      "title": "AGENTS.md · the rule",
+      "kind": "info",
+      "color": "pink",
+      "bounds": [
+        410,
+        116,
+        350,
+        142
+      ],
+      "lines": [
+        "before a large plan",
+        "when an error repeats",
+        "before calling it done"
+      ],
+      "footer": "review at three checkpoints"
+    },
+    {
+      "id": "roles",
+      "title": ".codex/agents/*.toml",
+      "kind": "info",
+      "color": "pink",
+      "bounds": [
+        792,
+        116,
+        380,
+        142
+      ],
+      "rows": [
+        {
+          "label": "explorer, researcher",
+          "value": "luna"
+        },
+        {
+          "label": "worker",
+          "value": "sol"
+        },
+        {
+          "label": "architect",
+          "value": "astra"
+        }
+      ],
+      "footer": "role-based dispatch"
+    },
+    {
+      "id": "sol",
+      "title": "GPT-6.1 Sol · main",
+      "color": "cyan",
+      "bounds": [
+        250,
+        330,
+        430,
+        140
+      ],
+      "subtitle": "plans + writes code",
+      "footer": "effort ▮▮▮▮ high"
+    },
+    {
+      "id": "jev",
+      "title": "JEV · fork layer",
+      "kind": "decision",
+      "color": "green",
+      "bounds": [
+        160,
+        526,
+        620,
+        192
+      ],
+      "meters": [
+        {
+          "id": "file",
+          "label": "which file",
+          "value": 0.88,
+          "warningBelow": 0.7
+        },
+        {
+          "id": "tool",
+          "label": "which tool",
+          "value": 0.94,
+          "warningBelow": 0.7
+        },
+        {
+          "id": "retry",
+          "label": "retry or stop",
+          "value": 0.52,
+          "warningBelow": 0.7
+        }
+      ]
+    },
+    {
+      "id": "astra",
+      "title": "ASTRA",
+      "kind": "reviewer",
+      "color": "purple",
+      "bounds": [
+        892,
+        330,
+        280,
+        388
+      ],
+      "subtitle": "architect · on call",
+      "lines": [
+        "◆ before a plan",
+        "◆ error repeats",
+        "◆ before done"
+      ],
+      "footer": "only at checkpoints"
+    },
+    {
+      "id": "workers",
+      "title": "AGENTS · fork workers",
+      "kind": "worker",
+      "color": "blue",
+      "bounds": [
+        160,
+        766,
+        620,
+        62
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "id": "config",
+      "source": "config",
+      "target": "sol",
+      "color": "pink",
+      "points": [
+        [
+          206,
+          258
+        ],
+        [
+          206,
+          294
+        ],
+        [
+          330,
+          294
+        ],
+        [
+          330,
+          330
+        ]
+      ]
+    },
+    {
+      "id": "rules",
+      "source": "rules",
+      "target": "astra",
+      "color": "pink",
+      "points": [
+        [
+          580,
+          258
+        ],
+        [
+          580,
+          286
+        ],
+        [
+          975,
+          286
+        ],
+        [
+          975,
+          330
+        ]
+      ]
+    },
+    {
+      "id": "roles",
+      "source": "roles",
+      "target": "astra",
+      "color": "pink",
+      "points": [
+        [
+          1100,
+          258
+        ],
+        [
+          1100,
+          330
+        ]
+      ]
+    },
+    {
+      "id": "ask_jev",
+      "source": "sol",
+      "target": "jev",
+      "color": "cyan",
+      "points": [
+        [
+          420,
+          470
+        ],
+        [
+          420,
+          526
+        ]
+      ],
+      "label": "request",
+      "labelAt": [
+        439,
+        495
+      ]
+    },
+    {
+      "id": "choice",
+      "source": "jev",
+      "target": "sol",
+      "color": "green",
+      "points": [
+        [
+          780,
+          610
+        ],
+        [
+          832,
+          610
+        ],
+        [
+          832,
+          440
+        ],
+        [
+          680,
+          440
+        ]
+      ],
+      "label": "decision",
+      "labelAt": [
+        843,
+        500
+      ]
+    },
+    {
+      "id": "ask_astra",
+      "source": "sol",
+      "target": "astra",
+      "color": "purple",
+      "points": [
+        [
+          680,
+          369
+        ],
+        [
+          892,
+          369
+        ]
+      ],
+      "label": "review request",
+      "labelAt": [
+        755,
+        352
+      ]
+    },
+    {
+      "id": "feedback",
+      "source": "astra",
+      "target": "sol",
+      "color": "purple",
+      "points": [
+        [
+          892,
+          411
+        ],
+        [
+          680,
+          411
+        ]
+      ],
+      "label": "review result",
+      "labelAt": [
+        755,
+        420
+      ]
+    },
+    {
+      "id": "dispatch",
+      "source": "jev",
+      "target": "workers",
+      "color": "blue",
+      "points": [
+        [
+          420,
+          718
+        ],
+        [
+          420,
+          766
+        ]
+      ],
+      "label": "dispatch",
+      "labelAt": [
+        439,
+        738
+      ]
+    },
+    {
+      "id": "result",
+      "source": "workers",
+      "target": "sol",
+      "color": "blue",
+      "points": [
+        [
+          160,
+          797
+        ],
+        [
+          110,
+          797
+        ],
+        [
+          110,
+          406
+        ],
+        [
+          250,
+          406
+        ]
+      ]
+    }
+  ],
+  "steps": [
+    {
+      "id": "load",
+      "label": "LOAD CONFIG",
+      "shortLabel": "读取配置",
+      "description": "Configuration loaded. Sol starts a failing-route repair.",
+      "duration": 2.0,
+      "activeNodes": [
+        "sol"
+      ],
+      "activeRoutes": [
+        "config",
+        "rules",
+        "roles"
+      ],
+      "nodeStates": {
+        "sol": {
+          "state": "LOADING",
+          "operation": "read config + agent rules"
+        },
+        "jev": {
+          "state": "WAITING",
+          "operation": "waiting for a decision request",
+          "selectedMeter": null,
+          "meterValues": {
+            "file": 0.88,
+            "tool": 0.94,
+            "retry": 0.52
+          }
+        },
+        "astra": {
+          "state": "STANDBY",
+          "operation": "waiting for a review request",
+          "footer": "checkpoint: before a plan\nonly at checkpoints"
+        },
+        "workers": {
+          "state": "IDLE",
+          "operation": "explorer / researcher / worker"
+        }
+      }
+    },
+    {
+      "id": "plan",
+      "label": "REVIEW THE PLAN",
+      "shortLabel": "计划复核",
+      "description": "Astra checks the approach before execution.",
+      "duration": 2.8,
+      "activeNodes": [
+        "astra"
+      ],
+      "activeRoutes": [
+        "ask_astra"
+      ],
+      "nodeStates": {
+        "sol": {
+          "state": "WAITING",
+          "operation": "send the implementation plan"
+        },
+        "jev": {
+          "state": "WAITING",
+          "operation": "plan review requested by rule",
+          "selectedMeter": null,
+          "meterValues": {
+            "file": 0.88,
+            "tool": 0.94,
+            "retry": 0.52
+          }
+        },
+        "astra": {
+          "state": "REVIEWING",
+          "operation": "check approach + boundaries",
+          "footer": "checkpoint: before a plan\nonly at checkpoints"
+        },
+        "workers": {
+          "state": "IDLE",
+          "operation": "waiting for plan approval"
+        }
+      }
+    },
+    {
+      "id": "approved",
+      "label": "PLAN APPROVED",
+      "shortLabel": "通过计划",
+      "description": "Plan approved. Sol prepares the next action.",
+      "duration": 1.8,
+      "activeNodes": [
+        "sol"
+      ],
+      "activeRoutes": [
+        "feedback"
+      ],
+      "nodeStates": {
+        "sol": {
+          "state": "PLANNING",
+          "operation": "prepare file + tool questions"
+        },
+        "jev": {
+          "state": "WAITING",
+          "operation": "ready to score routing choices",
+          "selectedMeter": null,
+          "meterValues": {
+            "file": 0.88,
+            "tool": 0.94,
+            "retry": 0.52
+          }
+        },
+        "astra": {
+          "state": "APPROVED",
+          "operation": "approach approved",
+          "tone": "green",
+          "footer": "checkpoint: before a plan\nonly at checkpoints"
+        },
+        "workers": {
+          "state": "IDLE",
+          "operation": "waiting for a dispatch"
+        }
+      }
+    },
+    {
+      "id": "choose",
+      "label": "JEV CHOOSES FILE + TOOL",
+      "shortLabel": "选择文件",
+      "description": "Jev evaluates file and tool choices; the code dispatches.",
+      "duration": 2.8,
+      "activeNodes": [
+        "jev"
+      ],
+      "activeRoutes": [
+        "ask_jev"
+      ],
+      "nodeStates": {
+        "sol": {
+          "state": "WAITING",
+          "operation": "ask: which file? which tool?"
+        },
+        "jev": {
+          "state": "EVALUATING",
+          "operation": "src/router.py  +  edit_file",
+          "selectedMeter": "file",
+          "meterValues": {
+            "file": 0.88,
+            "tool": 0.94,
+            "retry": 0.52
+          }
+        },
+        "astra": {
+          "state": "STANDBY",
+          "operation": "review complete; on call",
+          "footer": "checkpoint: before a plan\nonly at checkpoints"
+        },
+        "workers": {
+          "state": "IDLE",
+          "operation": "receiving the selected route"
+        }
+      }
+    },
+    {
+      "id": "dispatch",
+      "label": "DISPATCH THE WORKER",
+      "shortLabel": "分派任务",
+      "description": "Worker receives src/router.py and starts the edit.",
+      "duration": 2.2,
+      "activeNodes": [
+        "workers"
+      ],
+      "activeRoutes": [
+        "choice",
+        "dispatch"
+      ],
+      "nodeStates": {
+        "sol": {
+          "state": "DELEGATING",
+          "operation": "dispatch the selected action"
+        },
+        "jev": {
+          "state": "DECIDED",
+          "operation": "edit_file selected  /  sharp",
+          "selectedMeter": "tool",
+          "meterValues": {
+            "file": 0.88,
+            "tool": 0.94,
+            "retry": 0.52
+          }
+        },
+        "astra": {
+          "state": "STANDBY",
+          "operation": "on call",
+          "footer": "checkpoint: before a plan\nonly at checkpoints"
+        },
+        "workers": {
+          "state": "RUNNING",
+          "operation": "explore files -> worker edits"
+        }
+      }
+    },
+    {
+      "id": "execute",
+      "label": "WRITE CODE + RUN CHECK",
+      "shortLabel": "执行检查",
+      "description": "The worker edits code and verifies the route.",
+      "duration": 3.0,
+      "activeNodes": [
+        "workers"
+      ],
+      "activeRoutes": [
+        "dispatch"
+      ],
+      "nodeStates": {
+        "sol": {
+          "state": "MONITORING",
+          "operation": "track the worker result"
+        },
+        "jev": {
+          "state": "DECIDED",
+          "operation": "selected action is running",
+          "selectedMeter": "tool",
+          "meterValues": {
+            "file": 0.88,
+            "tool": 0.94,
+            "retry": 0.52
+          }
+        },
+        "astra": {
+          "state": "STANDBY",
+          "operation": "on call",
+          "footer": "checkpoint: before a plan\nonly at checkpoints"
+        },
+        "workers": {
+          "state": "RUNNING",
+          "operation": "write patch + rerun route check"
+        }
+      }
+    },
+    {
+      "id": "failure",
+      "label": "CHECK FAILED",
+      "shortLabel": "检查失败",
+      "description": "The route check fails again. Sol asks whether to retry.",
+      "duration": 2.0,
+      "activeNodes": [
+        "sol"
+      ],
+      "activeRoutes": [
+        "result"
+      ],
+      "nodeStates": {
+        "sol": {
+          "state": "BLOCKED",
+          "operation": "receive a repeated check failure",
+          "tone": "red"
+        },
+        "jev": {
+          "state": "WAITING",
+          "operation": "new question: retry or stop?",
+          "selectedMeter": "retry",
+          "meterValues": {
+            "file": 0.88,
+            "tool": 0.94,
+            "retry": 0.52
+          }
+        },
+        "astra": {
+          "state": "STANDBY",
+          "operation": "waiting for escalation",
+          "footer": "checkpoint: error repeats\nonly at checkpoints"
+        },
+        "workers": {
+          "state": "FAILED",
+          "operation": "check failed again: missing guard",
+          "tone": "red"
+        }
+      }
+    },
+    {
+      "id": "retry",
+      "label": "UNCERTAIN DECISION -> REVIEW",
+      "shortLabel": "不确定决策",
+      "description": "Retry confidence is 0.52. The demo routes to Astra.",
+      "duration": 2.8,
+      "activeNodes": [
+        "jev"
+      ],
+      "activeRoutes": [
+        "ask_jev",
+        "choice"
+      ],
+      "nodeStates": {
+        "sol": {
+          "state": "WAITING",
+          "operation": "ask: retry, stop, or review?"
+        },
+        "jev": {
+          "state": "UNCERTAIN",
+          "operation": "0.52 split  ->  request review",
+          "tone": "pink",
+          "selectedMeter": "retry",
+          "meterValues": {
+            "file": 0.88,
+            "tool": 0.94,
+            "retry": 0.52
+          }
+        },
+        "astra": {
+          "state": "STANDBY",
+          "operation": "review trigger received",
+          "footer": "checkpoint: error repeats\nonly at checkpoints"
+        },
+        "workers": {
+          "state": "PAUSED",
+          "operation": "waiting for a repair strategy",
+          "tone": "pink"
+        }
+      },
+      "routeLabels": {
+        "choice": "split"
+      }
+    },
+    {
+      "id": "review_error",
+      "label": "ASTRA REVIEWS THE FAILURE",
+      "shortLabel": "错误复核",
+      "description": "Astra finds the missing guard and proposes a repair.",
+      "duration": 3.0,
+      "activeNodes": [
+        "astra"
+      ],
+      "activeRoutes": [
+        "ask_astra"
+      ],
+      "nodeStates": {
+        "sol": {
+          "state": "WAITING",
+          "operation": "send failure + current patch"
+        },
+        "jev": {
+          "state": "UNCERTAIN",
+          "operation": "escalated by the routing rule",
+          "tone": "pink",
+          "selectedMeter": "retry",
+          "meterValues": {
+            "file": 0.88,
+            "tool": 0.94,
+            "retry": 0.52
+          }
+        },
+        "astra": {
+          "state": "REVIEWING",
+          "operation": "find missing guard condition",
+          "footer": "checkpoint: error repeats\nonly at checkpoints"
+        },
+        "workers": {
+          "state": "PAUSED",
+          "operation": "waiting for review feedback",
+          "tone": "pink"
+        }
+      },
+      "routeLabels": {
+        "choice": "split"
+      }
+    },
+    {
+      "id": "repair",
+      "label": "APPLY THE REPAIR",
+      "shortLabel": "执行修复",
+      "description": "Worker applies the guard. The route check now passes.",
+      "duration": 3.0,
+      "activeNodes": [
+        "workers"
+      ],
+      "activeRoutes": [
+        "feedback",
+        "dispatch"
+      ],
+      "nodeStates": {
+        "sol": {
+          "state": "REPAIRING",
+          "operation": "apply Astra feedback"
+        },
+        "jev": {
+          "state": "DECIDED",
+          "operation": "repair route selected  /  sharp",
+          "selectedMeter": "retry",
+          "meterValues": {
+            "file": 0.88,
+            "tool": 0.94,
+            "retry": 0.91
+          }
+        },
+        "astra": {
+          "state": "APPROVED",
+          "operation": "add guard; rerun route check",
+          "tone": "green",
+          "footer": "checkpoint: error repeats\nonly at checkpoints"
+        },
+        "workers": {
+          "state": "RUNNING",
+          "operation": "apply guard + rerun check"
+        }
+      }
+    },
+    {
+      "id": "final_review",
+      "label": "REVIEW BEFORE DONE",
+      "shortLabel": "完成复核",
+      "description": "Astra reviews the result before Sol marks it complete.",
+      "duration": 2.8,
+      "activeNodes": [
+        "astra"
+      ],
+      "activeRoutes": [
+        "result",
+        "ask_astra"
+      ],
+      "nodeStates": {
+        "sol": {
+          "state": "VERIFYING",
+          "operation": "submit patch + passing result"
+        },
+        "jev": {
+          "state": "DECIDED",
+          "operation": "decision loop complete",
+          "selectedMeter": null,
+          "meterValues": {
+            "file": 0.88,
+            "tool": 0.94,
+            "retry": 0.91
+          }
+        },
+        "astra": {
+          "state": "REVIEWING",
+          "operation": "review patch + verification",
+          "footer": "checkpoint: before done\nonly at checkpoints"
+        },
+        "workers": {
+          "state": "PASSED",
+          "operation": "patch complete / check passed",
+          "tone": "green"
+        }
+      }
+    },
+    {
+      "id": "done",
+      "label": "TASK COMPLETE",
+      "shortLabel": "任务完成",
+      "description": "Task complete. All events in this trace are simulated.",
+      "duration": 2.8,
+      "activeNodes": [
+        "sol"
+      ],
+      "activeRoutes": [
+        "feedback"
+      ],
+      "nodeStates": {
+        "sol": {
+          "state": "DONE",
+          "operation": "deliver the verified patch",
+          "tone": "green"
+        },
+        "jev": {
+          "state": "DECIDED",
+          "operation": "all routing decisions resolved",
+          "selectedMeter": null,
+          "meterValues": {
+            "file": 0.88,
+            "tool": 0.94,
+            "retry": 0.91
+          }
+        },
+        "astra": {
+          "state": "APPROVED",
+          "operation": "final review approved",
+          "tone": "green",
+          "footer": "checkpoint: before done\nonly at checkpoints"
+        },
+        "workers": {
+          "state": "PASSED",
+          "operation": "explorer OK / worker OK / check OK",
+          "tone": "green"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "终端风格动态架构图"
+  short_description: "用 HTML 和 SVG 展示系统组件、调用方向与执行状态，支持时间线播放和导出预览"
+  default_prompt: "使用 $animate-architecture，把我的系统结构和一次典型执行流程制作成终端风格的 HTML 动态架构图。"

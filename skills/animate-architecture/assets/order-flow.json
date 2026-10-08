@@ -1,0 +1,355 @@
+{
+  "version": 1,
+  "title": "ORDER PIPELINE · REQUEST → PAYMENT → FULFILMENT",
+  "subtitle": "SIMULATED SYSTEM WALKTHROUGH",
+  "simulated": true,
+  "canvas": {
+    "width": 1140,
+    "height": 620
+  },
+  "legend": [
+    {
+      "label": "request",
+      "color": "cyan"
+    },
+    {
+      "label": "service",
+      "color": "blue"
+    },
+    {
+      "label": "payment",
+      "color": "purple"
+    },
+    {
+      "label": "fulfilment",
+      "color": "green"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "client",
+      "title": "CLIENT",
+      "color": "cyan",
+      "bounds": [
+        50,
+        200,
+        240,
+        160
+      ],
+      "subtitle": "checkout request",
+      "footer": "request / response"
+    },
+    {
+      "id": "orders",
+      "title": "ORDER SERVICE",
+      "color": "blue",
+      "bounds": [
+        400,
+        200,
+        300,
+        160
+      ],
+      "subtitle": "validate + persist"
+    },
+    {
+      "id": "payment",
+      "title": "PAYMENT",
+      "color": "purple",
+      "bounds": [
+        850,
+        200,
+        240,
+        160
+      ],
+      "subtitle": "authorize payment"
+    },
+    {
+      "id": "queue",
+      "title": "EVENT QUEUE",
+      "color": "pink",
+      "bounds": [
+        400,
+        470,
+        300,
+        105
+      ]
+    },
+    {
+      "id": "warehouse",
+      "title": "WAREHOUSE",
+      "color": "green",
+      "bounds": [
+        850,
+        470,
+        240,
+        105
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "id": "submit",
+      "source": "client",
+      "target": "orders",
+      "color": "cyan",
+      "points": [
+        [
+          290,
+          235
+        ],
+        [
+          400,
+          235
+        ]
+      ],
+      "label": "submit",
+      "labelAt": [
+        315,
+        215
+      ]
+    },
+    {
+      "id": "ack",
+      "source": "orders",
+      "target": "client",
+      "color": "blue",
+      "points": [
+        [
+          400,
+          315
+        ],
+        [
+          290,
+          315
+        ]
+      ],
+      "label": "result",
+      "labelAt": [
+        315,
+        327
+      ]
+    },
+    {
+      "id": "charge",
+      "source": "orders",
+      "target": "payment",
+      "color": "purple",
+      "points": [
+        [
+          700,
+          235
+        ],
+        [
+          850,
+          235
+        ]
+      ],
+      "label": "authorize",
+      "labelAt": [
+        722,
+        215
+      ]
+    },
+    {
+      "id": "authorized",
+      "source": "payment",
+      "target": "orders",
+      "color": "purple",
+      "points": [
+        [
+          850,
+          315
+        ],
+        [
+          700,
+          315
+        ]
+      ],
+      "label": "confirmed",
+      "labelAt": [
+        722,
+        327
+      ]
+    },
+    {
+      "id": "publish",
+      "source": "orders",
+      "target": "queue",
+      "color": "pink",
+      "points": [
+        [
+          550,
+          360
+        ],
+        [
+          550,
+          470
+        ]
+      ],
+      "label": "order.paid",
+      "labelAt": [
+        565,
+        405
+      ]
+    },
+    {
+      "id": "consume",
+      "source": "queue",
+      "target": "warehouse",
+      "color": "green",
+      "points": [
+        [
+          700,
+          520
+        ],
+        [
+          850,
+          520
+        ]
+      ],
+      "label": "consume",
+      "labelAt": [
+        722,
+        500
+      ]
+    }
+  ],
+  "steps": [
+    {
+      "id": "submit",
+      "label": "SUBMIT ORDER",
+      "description": "客户提交订单，订单服务开始验证。",
+      "duration": 2.2,
+      "activeNodes": [
+        "orders"
+      ],
+      "activeRoutes": [
+        "submit"
+      ],
+      "nodeStates": {
+        "client": {
+          "state": "WAITING",
+          "operation": "submit cart + address"
+        },
+        "orders": {
+          "state": "VALIDATING",
+          "operation": "validate cart + availability"
+        }
+      }
+    },
+    {
+      "id": "authorize",
+      "label": "AUTHORIZE PAYMENT",
+      "description": "订单服务请求支付授权。",
+      "duration": 2.8,
+      "activeNodes": [
+        "payment"
+      ],
+      "activeRoutes": [
+        "charge"
+      ],
+      "nodeStates": {
+        "orders": {
+          "state": "WAITING",
+          "operation": "request payment authorization"
+        },
+        "payment": {
+          "state": "RUNNING",
+          "operation": "authorize the payment"
+        }
+      }
+    },
+    {
+      "id": "confirmed",
+      "label": "PAYMENT CONFIRMED",
+      "description": "支付结果返回，订单服务保存订单。",
+      "duration": 2,
+      "activeNodes": [
+        "orders"
+      ],
+      "activeRoutes": [
+        "authorized"
+      ],
+      "nodeStates": {
+        "payment": {
+          "state": "APPROVED",
+          "operation": "authorization confirmed"
+        },
+        "orders": {
+          "state": "SAVING",
+          "operation": "persist paid order"
+        }
+      }
+    },
+    {
+      "id": "publish",
+      "label": "PUBLISH THE EVENT",
+      "description": "订单服务发布付款成功事件。",
+      "duration": 2.2,
+      "activeNodes": [
+        "queue"
+      ],
+      "activeRoutes": [
+        "publish"
+      ],
+      "nodeStates": {
+        "orders": {
+          "state": "SAVED",
+          "operation": "order persisted"
+        },
+        "queue": {
+          "state": "READY",
+          "operation": "order.paid event received"
+        }
+      }
+    },
+    {
+      "id": "fulfil",
+      "label": "START FULFILMENT",
+      "description": "仓库消费事件，创建发货任务。",
+      "duration": 2.8,
+      "activeNodes": [
+        "warehouse"
+      ],
+      "activeRoutes": [
+        "consume"
+      ],
+      "nodeStates": {
+        "queue": {
+          "state": "DELIVERED",
+          "operation": "event consumed"
+        },
+        "warehouse": {
+          "state": "RUNNING",
+          "operation": "create fulfilment task"
+        }
+      }
+    },
+    {
+      "id": "done",
+      "label": "ORDER ACCEPTED",
+      "description": "客户收到订单确认，仓库继续履约。",
+      "duration": 2,
+      "activeNodes": [
+        "client"
+      ],
+      "activeRoutes": [
+        "ack"
+      ],
+      "nodeStates": {
+        "client": {
+          "state": "DONE",
+          "operation": "order accepted"
+        },
+        "orders": {
+          "state": "DONE",
+          "operation": "return order confirmation"
+        },
+        "warehouse": {
+          "state": "RUNNING",
+          "operation": "fulfilment in progress"
+        }
+      }
+    }
+  ]
+}

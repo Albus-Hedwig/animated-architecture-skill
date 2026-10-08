@@ -1,0 +1,11 @@
+# Repository guidance
+
+The portable skill is `skills/animate-architecture/`. It is the canonical source; local installations are snapshots installed by `scripts/install.py`.
+
+- Keep the skill focused on replayable terminal-style architecture diagrams. Do not hardcode the Agent example's names, thresholds or number of steps into the general player.
+- Keep the generated HTML self-contained and offline. Preserve SVG node-border ports, continuous paths, stable markers and particles following those paths.
+- After template or schema changes, rebuild the HTML in `examples/agent-tree/` and `examples/order-flow/` and run `python3 -m unittest discover -s tests`.
+- Validate changed visual behavior in a real browser. For route, layout or timeline changes use the browser verifier on affected examples, inspect actual screenshots, then update committed previews and reports.
+- Use `dist/` for temporary build and verification output. Copy only intended example deliverables into `examples/`.
+- Update local skills only after source validation; do not modify installed copies as the primary development path.
+- Repository visibility is private. Do not publish the examples to a public site or change sharing as part of routine updates.
