@@ -1,32 +1,38 @@
 {
-  "result": "passed",
-  "checked_at": "2026-10-08T03:23:44.897156+00:00",
-  "browser": "isolated Playwright Chromium",
-  "browser_version": "134.0.6998.35",
   "phases": 6,
   "duration_seconds": 14,
   "geometry": {
-    "issues": [],
     "routes": 6,
-    "frames": 280,
-    "packets": 280
+    "frames": 298,
+    "packets": 1661
   },
-  "node_content_bounds": "all phases passed",
-  "controls": [
-    "autoplay",
-    "pause",
+  "result": "passed",
+  "checked_at": "2026-10-08T07:46:33.038415+00:00",
+  "browser": "isolated Playwright Chromium",
+  "browser_version": "155.0.8059.39",
+  "coverage": [
+    "all phase states and meters",
+    "phase and route captions",
+    "node text bounds",
+    "caption bounds and overlaps",
+    "stable visible arrows/ports/paths",
+    "rounded route endpoints and node avoidance",
+    "all particle circles",
+    "all phase particle visibility and real motion",
     "step buttons",
-    "previous",
-    "next",
-    "keyboard",
+    "previous/next",
+    "autoplay/pause",
     "scrubber",
     "speed",
-    "end",
-    "loop",
+    "loop/end",
     "restart",
-    "zoom",
-    "fit",
-    "fullscreen"
+    "zoom/fit",
+    "desktop controls",
+    "real keyboard",
+    "real fullscreen",
+    "mobile fit and controls",
+    "reduced motion",
+    "offline/page errors"
   ],
   "viewports": [
     [
@@ -40,5 +46,7 @@
   ],
   "reduced_motion": "starts paused",
   "page_errors": [],
-  "external_requests": []
+  "external_requests": [],
+  "engine": "playwright",
+  "elapsed_seconds": 2.495
 }

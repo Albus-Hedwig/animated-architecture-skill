@@ -88,4 +88,4 @@ label 可省略；提供 label 时必须给 labelAt，避免推测标签位置�
 
 ## 参考样例
 
-`assets/agent-tree.json` 保留原图的 Agent 分层、异常复核和决策条；`assets/order-flow.json` 是不同数量节点、画布和流程的订单处理案例。先阅读与目标最接近的案例，再改为自己的真实组件与动作。
+`assets/order-flow.json` 用于横向处理流水线；`assets/hub-feedback.json` 提供中心协调、左右服务、上下数据和独立往返端口；`assets/agent-tree.json` 提供分层协作与异常复核。只读取最接近的一份，保留合适的几何结构，再替换为真实组件与动作。示例没有自动路由，改变节点和连接后仍需运行构建校验。

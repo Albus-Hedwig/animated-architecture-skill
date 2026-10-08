@@ -9,6 +9,6 @@
 ## 运行与维护依赖
 
 - 构建使用 Python 标准库；HTML 使用浏览器内置 HTML、CSS、SVG 和 JavaScript 功能，不随包分发第三方运行库或字体。
-- 浏览器验证与 GIF 导出使用维护者自行安装的 Playwright 和 Pillow；这些包不包含在本仓库或安装的 skill 中，各自遵循其原有许可证。
+- 浏览器验证可使用维护者已安装的 agent-browser 或 Playwright；GIF 导出另需 Pillow。依赖及浏览器不包含在本仓库或安装的 skill 中，各自遵循其原有许可证；可选 Python 依赖版本列在 skill 的 `requirements-browser.txt`。
 
 以后引入第三方代码、图片、字体或其他素材时，在此记录来源及许可，并保留其要求的版权和许可声明。当前目录级 MIT 声明不替代第三方许可。

@@ -1,0 +1,351 @@
+{
+  "version": 1,
+  "title": "中心协调与双向回执",
+  "subtitle": "布局样例 · 请替换为实际组件、职责和事件",
+  "simulated": true,
+  "canvas": {
+    "width": 1300,
+    "height": 940
+  },
+  "legend": [
+    {
+      "label": "来源",
+      "color": "cyan"
+    },
+    {
+      "label": "协调",
+      "color": "green"
+    },
+    {
+      "label": "服务",
+      "color": "blue"
+    },
+    {
+      "label": "执行",
+      "color": "pink"
+    },
+    {
+      "label": "数据",
+      "color": "purple"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "requester",
+      "title": "请求方",
+      "color": "cyan",
+      "bounds": [
+        500,
+        150,
+        300,
+        150
+      ],
+      "subtitle": "业务来源与结果确认"
+    },
+    {
+      "id": "coordinator",
+      "title": "协调服务",
+      "color": "green",
+      "bounds": [
+        500,
+        390,
+        300,
+        220
+      ],
+      "subtitle": "任务关系与执行决策",
+      "operation": "等待需求",
+      "footer": "各自保留职责，不复制事实所有权"
+    },
+    {
+      "id": "preparation",
+      "title": "专业服务",
+      "color": "blue",
+      "bounds": [
+        60,
+        410,
+        300,
+        180
+      ],
+      "subtitle": "准备与真实状态",
+      "operation": "等待相关任务"
+    },
+    {
+      "id": "executor",
+      "title": "执行服务",
+      "color": "pink",
+      "bounds": [
+        940,
+        410,
+        300,
+        180
+      ],
+      "subtitle": "接受、执行与结果",
+      "operation": "等待执行指令"
+    },
+    {
+      "id": "data",
+      "title": "数据服务",
+      "color": "purple",
+      "bounds": [
+        500,
+        730,
+        300,
+        160
+      ],
+      "subtitle": "持久化与查询"
+    }
+  ],
+  "routes": [
+    {
+      "id": "request",
+      "source": "requester",
+      "target": "coordinator",
+      "points": [
+        [
+          570,
+          300
+        ],
+        [
+          570,
+          390
+        ]
+      ],
+      "color": "cyan",
+      "label": "请求",
+      "labelAt": [
+        585,
+        335
+      ]
+    },
+    {
+      "id": "ack",
+      "source": "coordinator",
+      "target": "requester",
+      "points": [
+        [
+          730,
+          390
+        ],
+        [
+          730,
+          300
+        ]
+      ],
+      "color": "green",
+      "label": "回执",
+      "labelAt": [
+        745,
+        335
+      ]
+    },
+    {
+      "id": "prepare",
+      "source": "coordinator",
+      "target": "preparation",
+      "points": [
+        [
+          500,
+          460
+        ],
+        [
+          360,
+          460
+        ]
+      ],
+      "color": "blue",
+      "label": "准备请求",
+      "labelAt": [
+        382,
+        438
+      ]
+    },
+    {
+      "id": "ready",
+      "source": "preparation",
+      "target": "coordinator",
+      "points": [
+        [
+          360,
+          550
+        ],
+        [
+          500,
+          550
+        ]
+      ],
+      "color": "blue",
+      "label": "准备结果",
+      "labelAt": [
+        382,
+        562
+      ]
+    },
+    {
+      "id": "execute",
+      "source": "coordinator",
+      "target": "executor",
+      "points": [
+        [
+          800,
+          460
+        ],
+        [
+          940,
+          460
+        ]
+      ],
+      "color": "pink",
+      "label": "执行请求",
+      "labelAt": [
+        822,
+        438
+      ]
+    },
+    {
+      "id": "result",
+      "source": "executor",
+      "target": "coordinator",
+      "points": [
+        [
+          940,
+          550
+        ],
+        [
+          800,
+          550
+        ]
+      ],
+      "color": "pink",
+      "label": "执行实绩",
+      "labelAt": [
+        822,
+        562
+      ]
+    },
+    {
+      "id": "store",
+      "source": "coordinator",
+      "target": "data",
+      "points": [
+        [
+          570,
+          610
+        ],
+        [
+          570,
+          730
+        ]
+      ],
+      "color": "purple",
+      "label": "写入",
+      "labelAt": [
+        585,
+        670
+      ]
+    },
+    {
+      "id": "read",
+      "source": "data",
+      "target": "coordinator",
+      "points": [
+        [
+          730,
+          730
+        ],
+        [
+          730,
+          610
+        ]
+      ],
+      "color": "purple",
+      "label": "读取",
+      "labelAt": [
+        745,
+        670
+      ]
+    }
+  ],
+  "steps": [
+    {
+      "id": "receive",
+      "label": "接收需求",
+      "shortLabel": "需求",
+      "duration": 3,
+      "activeNodes": [
+        "requester",
+        "coordinator"
+      ],
+      "activeRoutes": [
+        "request"
+      ],
+      "nodeStates": {
+        "coordinator": {
+          "state": "受理",
+          "operation": "校验需求并关联任务"
+        }
+      }
+    },
+    {
+      "id": "prepare",
+      "label": "准备与回执",
+      "shortLabel": "准备",
+      "duration": 3,
+      "activeNodes": [
+        "coordinator",
+        "preparation"
+      ],
+      "activeRoutes": [
+        "prepare",
+        "ready"
+      ],
+      "nodeStates": {
+        "preparation": {
+          "state": "已准备",
+          "operation": "返回实际准备结果"
+        }
+      }
+    },
+    {
+      "id": "execute",
+      "label": "执行与结果",
+      "shortLabel": "执行",
+      "duration": 3,
+      "activeNodes": [
+        "coordinator",
+        "executor"
+      ],
+      "activeRoutes": [
+        "execute",
+        "result"
+      ],
+      "nodeStates": {
+        "executor": {
+          "state": "执行",
+          "operation": "返回可追溯执行实绩"
+        }
+      }
+    },
+    {
+      "id": "close",
+      "label": "保存并闭环",
+      "shortLabel": "闭环",
+      "duration": 3,
+      "activeNodes": [
+        "coordinator",
+        "data",
+        "requester"
+      ],
+      "activeRoutes": [
+        "store",
+        "read",
+        "ack"
+      ],
+      "nodeStates": {
+        "coordinator": {
+          "state": "闭环",
+          "operation": "对账并回传结果"
+        }
+      }
+    }
+  ]
+}

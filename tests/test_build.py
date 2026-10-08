@@ -16,15 +16,16 @@ class DiagramBuildTests(unittest.TestCase):
     def setUp(self):
         self.order=json.loads((SKILL/'assets/order-flow.json').read_text())
 
-    def test_two_distinct_topologies_build_offline(self):
+    def test_three_distinct_topologies_build_offline_with_license(self):
         with tempfile.TemporaryDirectory() as tmp:
             results=[]
-            for name in ('agent-tree','order-flow'):
+            for name in ('agent-tree','order-flow','hub-feedback'):
                 target=Path(tmp)/(name+'.html')
                 results.append(build(SKILL/'assets'/f'{name}.json',target))
                 self.assertTrue(target.is_file() and target.stat().st_size>10000)
-            self.assertEqual([r['nodes'] for r in results],[7,5])
-            self.assertEqual([r['steps'] for r in results],[12,6])
+                self.assertIn((SKILL/'LICENSE').read_text().strip(), target.read_text())
+            self.assertEqual([r['nodes'] for r in results],[7,5,5])
+            self.assertEqual([r['steps'] for r in results],[12,6,4])
 
     def test_reject_detached_endpoint(self):
         data=copy.deepcopy(self.order);data['routes'][0]['points'][0][0]+=2

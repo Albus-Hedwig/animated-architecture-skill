@@ -6,48 +6,54 @@ description: Create terminal-style animated architecture diagrams as offline HTM
 
 # 终端风格动态架构图
 
-把系统的组件结构和一次典型执行过程做成可离线打开、可暂停和拖动时间线的 HTML。默认采用深色终端窗口、等宽字体、柔和的分组颜色、SVG 连线和沿路径移动的光点。图是浏览器实时绘制的；GIF 是可选导出的预览。
+把真实组件关系和一次典型执行过程做成单文件 HTML：深色终端窗口、SVG 连线、路径光点，可离线播放、暂停和拖动。GIF 仅在用户需要时导出。
 
-## 从用户的系统开始
+## 确定内容
 
-识别组件、职责、连接方向和需要演示的执行场景。已有材料足够时直接制作；缺少真实架构或关键分支时，仅询问影响正确性的内容。对合理补全的假设作简短说明，模拟的事件和数字标为演示数据。不要把示例中的模型名、规则、阈值或步骤数带到无关系统。
+先确认组件职责、连接方向和演示场景。沿用现行事实源；已有资料足够时直接制作，不为制图重新全面梳理项目。缺少会改变架构正确性的信息才提问。模拟事件、数字和播放时长必须标明演示，不宣称真实运行记录。
 
-底图表达组件及关系，动画表达一个场景的调用顺序和执行状态。将“任务下发”“结果返回”“异常升级”等不同含义写在连线或事件中。是否需要动画、原生终端输出或视频导出，以用户要求为准；此 skill 的现成模板用于 HTML。
+底图表达组件关系，动画表达调用顺序。请求、结果、异常用各自明确的方向和文字；不把所有可能分支塞进一单演示，也不沿用示例的模型、阈值或业务规则。
 
-## 制作
+## 按需读取与制作
 
-读取 [数据格式](references/diagram-format.md)。需要调整风格或复杂连接时再读取 [设计与验证规则](references/design-and-validation.md)。
+1. 读取 [数据格式](references/diagram-format.md)，再选一个最接近的布局样例：
+   - 横向流水线与回执：`assets/order-flow.json`。
+   - 中心协调、左右服务和往返通道：`assets/hub-feedback.json`。
+   - 分层协作与异常复核：`assets/agent-tree.json`。
+2. 根据用户系统填写 `diagram.json`，复用合适的几何结构，不只替换示例标题。涉及复杂反馈或风格调整时，才读 [设计与验证](references/design-and-validation.md)。
+3. 通常直接运行脚本；只有修改或排查失败时才读取脚本或播放器完整实现。不要为每张图重新编写验证脚本。
 
-以 `assets/agent-tree.json` 为当前图的完整案例，或 `assets/order-flow.json` 为另一种拓扑案例。根据目标系统建立 `diagram.json`，不要仅改案例标题。节点、连线与步骤都是数据；通常无需修改渲染器。
+先安排节点和走线通道再填文字。端点落在框边非角点，路径不穿节点、不无意义交叉或重叠；反馈占独立通道。节点、箭头、端口保持固定，只有活动路径和光点运动。双向交互用分开的请求、回报路线。
 
-先安排节点框，再给连线选择框边上的端口与折点。通道留出标签空间，反馈线绕到外侧，避免线穿过节点。连线使用连续的 SVG 路径；箭头和端口独立，移动光点沿同一路径取位置，不覆盖或替换接点。
-
-运行 skill 目录下的脚本（路径相对于本 skill）：
+在 skill 目录下运行，路径按实际文件位置调整：
 
 ```bash
-python3 scripts/build.py diagram.json --output index.html
+python3 scripts/build.py diagram.json --output index.html --verify
 ```
 
-构建只用 Python 标准库，生成单文件 HTML，数据、CSS 和 JavaScript 全部内嵌。播放无需服务、第三方 CDN 或安装依赖。默认支持播放/暂停、单步、重播、倍速、进度拖动、缩放、适应窗口和全屏；偏好减少动态效果时默认暂停。小窗口保留可读字号并允许横向滚动，也可主动适应窗口。
+这一次调用构建 HTML、选择已安装的验证环境、检查完整流程，并生成 `preview/preview.png`、`mobile.png`、`verification.json`。构建只依赖 Python 标准库；播放不依赖本地资源路径、服务或 CDN。
 
-只在明确需要新视觉行为时修改 `assets/player.template.html`；不要引入图形编辑器、实时模型调用或托管发布来扩大普通制图任务。
+## 验证与交付
 
-## 检查与交付
+验证默认复用现有 `agent-browser`；不可用时选已安装的 Playwright。不会自动安装依赖。后端选定后，权限失败、启动失败或验收失败应明确报出，不能换后端掩盖问题；权限限制按当前执行环境处理。
 
-构建会检查数据引用、时长、数值、边框端点以及路径与节点的关系。对包含反馈、升级或多分支的图，在浏览器检查全流程；不要只看用户圈出的连接或一张静帧。
-
-有 Playwright Chromium 可用时：
+独立验证、环境查看和可选输出：
 
 ```bash
 python3 scripts/verify_browser.py index.html --output-dir preview
-python3 scripts/verify_browser.py index.html --output-dir preview --gif
+python3 scripts/verify_browser.py --doctor
+python3 scripts/verify_browser.py index.html --engine playwright --browser-path /path/to/chrome
+python3 scripts/verify_browser.py index.html --all-steps
+python3 scripts/verify_browser.py index.html --gif
 ```
 
-验证器打开本地 HTML，阻止外部请求，核对所有阶段及播放控制、路径和光点、桌面与小屏布局。第一条输出截图及验证报告；第二条额外输出浏览器截图生成的 GIF，需要 Pillow。若环境限制浏览器，使用可用的浏览器工具验证，明确说明完成范围；不要将构建成功称为视觉验证通过。
+默认检查每个阶段，但只保存代表图和小屏截图；`--all-steps` 才保存逐阶段 PNG。GIF 保留 Playwright 路径，需要 Pillow，不作为常规检查的一部分。需要安装时按 [可选浏览器环境](references/browser-setup.md) 使用独立虚拟环境。选择 `agent-browser` 时，先按该 CLI 的 core 指南确认工作方式；无需加载整套 `--full` 手册。
 
-查看实际截图，修正溢出、接点、标签遮挡和状态不符。发现布局问题时修数据或模板，重新生成受影响的输出。完成标准是目标图在浏览器正确呈现、需要的交互可用且交付文件已更新；检查通过后停止扩展。
+验证覆盖状态、文字边界、端点/箭头/光点、暂停/单步/拖动/倍速/循环、缩放/全屏、桌面/小屏及减少动态效果。查看实际截图，修正溢出或接点问题；报告通过不等于视觉审阅通过。若浏览器受限，说明尚未完成的检查，不把构建成功当作视觉验收。
 
-交付可直接打开的 `index.html`、可编辑的 `diagram.json`，以及用户需要的预览。说明哪些事件是模拟，哪些是真实记录。仓库提交、分享、部署或向别人发送文件以当前任务授权为准，普通制图请求不自动授权这些动作。
+同一轮小改动只补查受影响的状态、文字和路径；播放器或控制逻辑改变时重新跑完整检查。只在确需新视觉行为时修改 `assets/player.template.html`，不引入图形编辑器、实时模型或托管发布。
+
+交付 `index.html`、`diagram.json` 和所需预览。说明模拟范围；Git 提交、分享、部署或发送给别人仍以用户当前授权为准。
 
 ## 许可与来源
 
