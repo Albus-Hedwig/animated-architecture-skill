@@ -42,7 +42,7 @@ python3 skills/animate-architecture/scripts/verify_browser.py dist/agent-tree.ht
 
 ## 后续迭代
 
-仓库中的 skill 是更新来源；本地安装副本是快照。修改 `skills/animate-architecture/`，更新案例及验证输出，提交到仓库，再运行安装脚本同步本地。另一台电脑可以先克隆私有仓库，再安装。
+仓库中的 skill 是更新来源；本地安装副本是快照。修改 `skills/animate-architecture/`，更新案例及验证输出，提交到仓库，再运行安装脚本同步本地。仓库现为公开仓库，另一台电脑可以直接克隆，再安装。
 
 ```bash
 git pull --ff-only

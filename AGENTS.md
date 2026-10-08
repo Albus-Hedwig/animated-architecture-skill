@@ -8,4 +8,4 @@ The portable skill is `skills/animate-architecture/`. It is the canonical source
 - Validate changed visual behavior in a real browser. For route, layout or timeline changes use the browser verifier on affected examples, inspect actual screenshots, then update committed previews and reports.
 - Use `dist/` for temporary build and verification output. Copy only intended example deliverables into `examples/`.
 - Update local skills only after source validation; do not modify installed copies as the primary development path.
-- Repository visibility is private. Do not publish the examples to a public site or change sharing as part of routine updates.
+- Repository visibility is public. Do not change repository visibility or deploy the examples to a hosted site as part of routine updates.
