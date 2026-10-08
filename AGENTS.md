@@ -9,3 +9,4 @@ The portable skill is `skills/animate-architecture/`. It is the canonical source
 - Use `dist/` for temporary build and verification output. Copy only intended example deliverables into `examples/`.
 - Update local skills only after source validation; do not modify installed copies as the primary development path.
 - Repository visibility is public. Do not change repository visibility or deploy the examples to a hosted site as part of routine updates.
+- Preserve the MIT license in the repository, portable skill and generated HTML. Keep the two LICENSE copies and the template's full license comment consistent; record third-party material and its original terms in ATTRIBUTIONS.md when introduced.

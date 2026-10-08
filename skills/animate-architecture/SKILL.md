@@ -1,5 +1,6 @@
 ---
 name: animate-architecture
+license: MIT
 description: Create terminal-style animated architecture diagrams as offline HTML, showing component relationships, directed calls or data flow, and changing execution states. Use for dynamic architecture diagrams, Agent collaboration diagrams, or replayable system walkthroughs; optionally export browser screenshots and GIF previews.
 ---
 
@@ -47,3 +48,7 @@ python3 scripts/verify_browser.py index.html --output-dir preview --gif
 查看实际截图，修正溢出、接点、标签遮挡和状态不符。发现布局问题时修数据或模板，重新生成受影响的输出。完成标准是目标图在浏览器正确呈现、需要的交互可用且交付文件已更新；检查通过后停止扩展。
 
 交付可直接打开的 `index.html`、可编辑的 `diagram.json`，以及用户需要的预览。说明哪些事件是模拟，哪些是真实记录。仓库提交、分享、部署或向别人发送文件以当前任务授权为准，普通制图请求不自动授权这些动作。
+
+## 许可与来源
+
+本 skill 使用 [MIT 许可证](LICENSE)。保留模板及生成 HTML 注释中的完整版权和许可声明，单独分发 skill 时附带 LICENSE。MIT 覆盖本项目的渲染器、文档和原创示例；用户自行输入的业务内容和第三方素材遵循各自的权利及许可，不因使用本工具自动改为 MIT。

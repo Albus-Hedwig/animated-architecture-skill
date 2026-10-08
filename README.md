@@ -50,3 +50,11 @@ python3 scripts/install.py
 ```
 
 skill 内容为可读 Markdown，格式适合维护在 GitHub。新增需求优先扩展 JSON 或有实证的问题规则，避免每次案例都累积固定步骤、阈值和模型名。初始风格来自用户提供的参考截图；此仓库中的渲染器与 skill 为本次实现。
+
+## License
+
+本项目采用 [MIT License](LICENSE)，版权署名为 `Copyright (c) 2026 Albus-Hedwig`。除另有明确声明外，许可覆盖本仓库的代码、skill 文档、HTML 模板、示例配置和由这些示例渲染的预览。
+
+单独安装或分发 skill 时，保留其目录中的 [LICENSE](skills/animate-architecture/LICENSE)。模板和生成的单文件 HTML 内含完整 MIT 声明，复制或修改后继续保留。
+
+使用者自行提供的业务内容和第三方素材不因使用本工具而自动适用 MIT；生成 HTML 中包含的本项目渲染器仍需保留许可声明。参考来源及依赖范围见 [ATTRIBUTIONS.md](ATTRIBUTIONS.md)。
