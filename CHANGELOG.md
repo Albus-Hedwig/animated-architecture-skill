@@ -1,5 +1,10 @@
 # Changes
 
+## Unreleased
+
+- Put the existing animation preview and three downloadable examples first in the README.
+- Document clone-to-install steps, standalone builds and offline playback without changing the renderer or skill.
+
 ## 0.2.0 — 2026-10-08
 
 - Reused installed agent-browser or Playwright, with one build-and-verify entry point and explicit failures instead of backend retries.
@@ -21,3 +26,4 @@
 - Added a standard-library builder with route and schema validation, and an isolated browser verifier with optional GIF export.
 - Added Agent collaboration and order-processing examples to validate different topologies.
 - Added a local installer with backup and a repository workflow for iteration.
+
